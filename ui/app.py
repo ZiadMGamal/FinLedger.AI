@@ -14,7 +14,7 @@ st.title(settings.project_name)
 st.subheader("Enterprise Financial RAG Platform")
 st.write("Created with Ziad Mohamed Gamal")
 
-api_base_url = f"http://{settings.api_host}:{settings.api_port}".replace("0.0.0.0", "127.0.0.1")
+api_base_url = settings.api_base_url.strip() or f"http://{settings.api_host}:{settings.api_port}".replace("0.0.0.0", "127.0.0.1")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []

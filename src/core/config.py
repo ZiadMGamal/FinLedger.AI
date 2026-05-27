@@ -48,6 +48,7 @@ class Settings(BaseSettings):
 
     api_host: str = Field(default="0.0.0.0", alias="API_HOST")
     api_port: int = Field(default=8000, alias="API_PORT")
+    api_base_url: str = Field(default="", alias="API_BASE_URL")
     streamlit_port: int = Field(default=8501, alias="STREAMLIT_PORT")
 
 
