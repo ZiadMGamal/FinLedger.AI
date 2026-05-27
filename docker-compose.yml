@@ -8,6 +8,12 @@ services:
     volumes:
       - qdrant_storage:/qdrant/storage
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/6333'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   api:
     build:
@@ -24,14 +30,15 @@ services:
     volumes:
       - ./data:/app/data
     depends_on:
-      - qdrant
+      qdrant:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
       interval: 30s
       timeout: 10s
       retries: 5
-      start_period: 20s
+      start_period: 30s
 
   ui:
     build:
@@ -52,6 +59,26 @@ services:
       api:
         condition: service_healthy
     restart: unless-stopped
+
+  pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: finledger-pipeline
+    profiles:
+      - ingest
+    env_file:
+      - .env
+    environment:
+      QDRANT_HOST: qdrant
+      VECTOR_BACKEND: qdrant
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      qdrant:
+        condition: service_healthy
+    entrypoint: ["python", "-m", "src.pipeline.run_ingestion"]
+    command: ["ingest", "--input-path", "data/raw/docfinqa_train.json"]
 
 volumes:
   qdrant_storage:
