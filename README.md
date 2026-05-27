@@ -1,6 +1,6 @@
 # FinLedger.AI
 
-[![CI](https://github.com/<your-username>/FinLedger.AI/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-username>/FinLedger.AI/actions/workflows/ci.yml)
+[![CI](https://github.com/ZiadMGamal/FinLedger.AI/actions/workflows/ci.yml/badge.svg)](https://github.com/ZiadMGamal/FinLedger.AI/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/API-FastAPI-009688)](https://fastapi.tiangolo.com/)
 [![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B)](https://streamlit.io/)
@@ -144,4 +144,4 @@ GitHub Actions workflow is included at `.github/workflows/ci.yml` and runs:
 - `ruff` static checks
 - syntax compile check across `src`, `api`, and `ui`
 
-Before publishing, replace `<your-username>` in the badge URL with your GitHub username.
+CI badge is configured for `ZiadMGamal/FinLedger.AI`.
