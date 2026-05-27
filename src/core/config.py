@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Literal
 
 from pydantic import Field
@@ -36,6 +37,14 @@ class Settings(BaseSettings):
     max_contexts: int = Field(default=6, alias="MAX_CONTEXTS")
     top_k: int = Field(default=20, alias="TOP_K")
     temperature: float = Field(default=0.0, alias="TEMPERATURE")
+    retrieval_mode: Literal["parent_child", "contextual_compression"] = Field(default="parent_child", alias="RETRIEVAL_MODE")
+    retrieval_vector_weight: float = Field(default=0.75, alias="RETRIEVAL_VECTOR_WEIGHT")
+    retrieval_keyword_weight: float = Field(default=0.25, alias="RETRIEVAL_KEYWORD_WEIGHT")
+    compression_top_n: int = Field(default=8, alias="COMPRESSION_TOP_N")
+    parent_chunks_path: str = Field(default="data/processed/chunks/parent_chunks.jsonl", alias="PARENT_CHUNKS_PATH")
+    child_chunks_path: str = Field(default="data/processed/chunks/child_chunks.jsonl", alias="CHILD_CHUNKS_PATH")
+    evaluation_sample_size: int = Field(default=50, alias="EVALUATION_SAMPLE_SIZE")
+    evaluation_output_path: str = Field(default="data/processed/evaluation/latest_report.json", alias="EVALUATION_OUTPUT_PATH")
 
     api_host: str = Field(default="0.0.0.0", alias="API_HOST")
     api_port: int = Field(default=8000, alias="API_PORT")
@@ -43,3 +52,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+Path(settings.evaluation_output_path).parent.mkdir(parents=True, exist_ok=True)

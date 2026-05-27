@@ -8,6 +8,7 @@ langchain-core
 langchain-community
 langchain-openai
 langchain-text-splitters
+rank-bm25
 openai
 tiktoken
 qdrant-client
